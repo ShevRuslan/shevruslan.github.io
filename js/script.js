@@ -72,8 +72,8 @@ class ElementToDo {
           
             <div class="dropdown-menu dropdown-primary">
               <a  class="btn btn-success dropdown-item btn-sm">Выполнено</a>
-              <a  class="btn btn-danger dropdown-item btn-sm">Невыполнено</a>
               <a  class="btn btn-info dropdown-item btn-sm" data-toggle="modal" data-target="#basicExampleModal">Редактировать</a>
+              <a  class="btn btn-danger dropdown-item btn-sm">Невыполнено</a>
               <a  class="btn delete dropdown-item btn-sm ">Удалить</a>
             </div>
         </div>
