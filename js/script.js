@@ -19,6 +19,10 @@ class ElementToDo {
     this.buttonSuccess = null;
     this.buttonNotDone = null;
     this.buttonDanger = null;
+    this.buttonEdit = null;
+    this.buttonSaveModal = null;
+
+    this.textAreaModal = null;
     this.wrapper = null;
     this.init();//вызывается функция, который инициализирует объекта
     //конец инциализации объекта
@@ -69,13 +73,44 @@ class ElementToDo {
             <div class="dropdown-menu dropdown-primary">
               <a  class="btn btn-success dropdown-item btn-sm">Выполнено</a>
               <a  class="btn btn-danger dropdown-item btn-sm">Невыполнено</a>
+              <a  class="btn btn-info dropdown-item btn-sm" data-toggle="modal" data-target="#basicExampleModal">Редактировать</a>
               <a  class="btn delete dropdown-item btn-sm ">Удалить</a>
             </div>
         </div>
       <section class="wrapper ${classStatus} block-example border border-info">
         <h4 class="zag">${settings.headLine}</h4>
         <p class="text-justify">${settings.content}</p>
-      </section>`
+      </section>
+
+      <!-- Central Modal Small -->
+    <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+        <!-- Change class .modal-sm to change the size of the modal -->
+        <div class="modal-dialog modal-lg" role="document">
+
+
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title w-100" id="myModalLabel">${settings.headLine}</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="md-form">
+                <i class="fa fa-pencil prefix"></i>
+                <textarea type="text" id="form10" class="md-textarea form-control" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary btn-sm save">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Central Modal Small -->
+  `
   return template;
   }
   //сохрание в localstorage
@@ -83,11 +118,21 @@ class ElementToDo {
     let values = this.get();
     localStorage.setItem(this.name,JSON.stringify(values));
   }
+  saveModal(content) {
+    $('#basicExampleModal').modal('hide');//mdboostrap hide modal
+    this.content = this.textAreaModal.value;
+    content.textContent = this.content;
+    this.save();
+  }
   //инициализия всех элементов объекта(кнопок)
   initElements(li) {
+    let wrapperContent = li.querySelector('.wrapper p');
     this.buttonSuccess = li.querySelector('.btn-success');
     this.buttonDanger = li.querySelector('.delete');
     this.buttonNotDone = li.querySelector('.btn-danger')
+    this.buttonSaveModal = li.querySelector('.modal .save');
+    this.textAreaModal = li.querySelector('.modal textarea');
+    this.buttonSaveModal.addEventListener('click',this.saveModal.bind(this, wrapperContent));
     this.buttonSuccess.addEventListener('click', this.eventSuccess.bind(this));
     this.buttonDanger.addEventListener('click', this.eventDelete.bind(this));
     this.buttonNotDone.addEventListener('click', this.eventNotDone.bind(this));
