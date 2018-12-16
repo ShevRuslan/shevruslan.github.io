@@ -99,7 +99,10 @@ class ElementToDo {
             <div class="modal-body">
               <div class="md-form">
                 <i class="fa fa-pencil prefix"></i>
-                <textarea type="text" id="form10" class="md-textarea form-control" rows="3"></textarea>
+                <textarea type="text" id="form10" class="md-textarea form-control" rows="3" required></textarea>
+                <div class="errors">
+                
+                </div>
               </div>
             </div>
             <div class="modal-footer">
@@ -118,21 +121,27 @@ class ElementToDo {
     let values = this.get();
     localStorage.setItem(this.name,JSON.stringify(values));
   }
-  saveModal(content) {
-    $('#basicExampleModal').modal('hide');//mdboostrap hide modal
-    this.content = this.textAreaModal.value;
-    content.textContent = this.content;
-    this.save();
+  saveModal(content, errors) {
+    if(this.textAreaModal.value != '') {
+      $('#basicExampleModal').modal('hide');//mdboostrap hide modal
+      this.content = this.textAreaModal.value;
+      content.textContent = this.content;
+      this.save();
+    }
+    else {
+      errors.textContent = "Поле не должно быть пустое!";
+    }
   }
   //инициализия всех элементов объекта(кнопок)
   initElements(li) {
     let wrapperContent = li.querySelector('.wrapper p');
+    let errorsModal = li.querySelector('.modal .errors');
     this.buttonSuccess = li.querySelector('.btn-success');
     this.buttonDanger = li.querySelector('.delete');
     this.buttonNotDone = li.querySelector('.btn-danger')
     this.buttonSaveModal = li.querySelector('.modal .save');
     this.textAreaModal = li.querySelector('.modal textarea');
-    this.buttonSaveModal.addEventListener('click',this.saveModal.bind(this, wrapperContent));
+    this.buttonSaveModal.addEventListener('click',this.saveModal.bind(this, wrapperContent, errorsModal));
     this.buttonSuccess.addEventListener('click', this.eventSuccess.bind(this));
     this.buttonDanger.addEventListener('click', this.eventDelete.bind(this));
     this.buttonNotDone.addEventListener('click', this.eventNotDone.bind(this));
