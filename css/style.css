@@ -7,6 +7,10 @@
 i {
   color: #ffffff;
 }
+.date__create {
+  color: #000000;
+  font-size: 12px;
+}
 .todo_container {
   list-style-type: none;
   padding: 0;

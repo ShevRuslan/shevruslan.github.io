@@ -24,8 +24,21 @@ class ElementToDo {
     this.wrapperContent = null;
     this.textAreaModal = null;
     this.wrapper = null;
+    this.date = new Date();
     this.init();//вызывается функция, который инициализирует объекта
     //конец инциализации объекта
+  }
+  formatDate(date) {
+    var dd = date.getDate();
+    if (dd < 10) dd = '0' + dd;
+
+    var mm = date.getMonth() + 1;
+    if (mm < 10) mm = '0' + mm;
+
+    var yy = date.getFullYear() % 100;
+    if (yy < 10) yy = '0' + yy;
+
+    return  dd + '.' + mm + '.' + yy;
   }
   //события удаление задания
   eventDelete() {
@@ -54,6 +67,7 @@ class ElementToDo {
       content: this.content,
       number: this.number,
       status: this.status,
+      date: this.formatDate(this.date),
     }
   }
   //функция, которая генерирует шаблон для будущего объекта
@@ -80,6 +94,7 @@ class ElementToDo {
       <section class="wrapper ${classStatus} block-example border border-info">
         <h4 class="zag">${settings.headLine}</h4>
         <p class="text-justify content">${settings.content}</p>
+        <i class="date__create" >${settings.date}</i>
       </section>
 
       <!-- Central Modal Small -->
@@ -158,6 +173,7 @@ class ElementToDo {
         content: this.content,
         number: this.number,
         status: this.status,
+        date: this.formatDate(this.date),
       });
       let li = document.createElement('li');
       li.classList.add(this.name);
