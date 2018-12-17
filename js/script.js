@@ -1,5 +1,5 @@
 // Все переменные, которые нам пригодятся.
-// let allElements = [];
+let allElements = [];
 let form = document.querySelector('.form form');
 let buttonCreate = document.querySelector('form .create');
 let head = document.querySelector('form .headline');
@@ -21,7 +21,7 @@ class ElementToDo {
     this.buttonDanger = null;
     this.buttonEdit = null;
     this.buttonSaveModal = null;
-
+    this.wrapperContent = null;
     this.textAreaModal = null;
     this.wrapper = null;
     this.init();//вызывается функция, который инициализирует объекта
@@ -72,18 +72,18 @@ class ElementToDo {
           
             <div class="dropdown-menu dropdown-primary">
               <a  class="btn btn-success dropdown-item btn-sm">Выполнено</a>
-              <a  class="btn btn-info dropdown-item btn-sm" data-toggle="modal" data-target="#basicExampleModal">Редактировать</a>
+              <a  class="btn btn-info dropdown-item btn-sm" data-toggle="modal" data-target="#basicExampleModal${settings.number}">Редактировать</a>
               <a  class="btn btn-danger dropdown-item btn-sm">Невыполнено</a>
               <a  class="btn delete dropdown-item btn-sm ">Удалить</a>
             </div>
         </div>
       <section class="wrapper ${classStatus} block-example border border-info">
         <h4 class="zag">${settings.headLine}</h4>
-        <p class="text-justify">${settings.content}</p>
+        <p class="text-justify content">${settings.content}</p>
       </section>
 
       <!-- Central Modal Small -->
-    <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="basicExampleModal${settings.number}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
         <!-- Change class .modal-sm to change the size of the modal -->
         <div class="modal-dialog modal-lg" role="document">
@@ -99,7 +99,7 @@ class ElementToDo {
             <div class="modal-body">
               <div class="md-form">
                 <i class="fa fa-pencil prefix"></i>
-                <textarea type="text" id="form10" class="md-textarea form-control" rows="3" required></textarea>
+                <textarea type="text" id="form10" class="md-textarea form-control" rows="3" required>${settings.content}</textarea>
                 <div class="errors">
                 
                 </div>
@@ -121,11 +121,11 @@ class ElementToDo {
     let values = this.get();
     localStorage.setItem(this.name,JSON.stringify(values));
   }
-  saveModal(content, errors) {
+  saveModal(errors) {
     if(this.textAreaModal.value != '') {
-      $('#basicExampleModal').modal('hide');//mdboostrap hide modal
+      $('#basicExampleModal' + this.number).modal('hide');//mdboostrap hide modal
       this.content = this.textAreaModal.value;
-      content.textContent = this.content;
+      this.wrapperContent.textContent = this.content;
       this.save();
     }
     else {
@@ -134,19 +134,19 @@ class ElementToDo {
   }
   //инициализия всех элементов объекта(кнопок)
   initElements(li) {
-    let wrapperContent = li.querySelector('.wrapper p');
     let errorsModal = li.querySelector('.modal .errors');
     this.buttonSuccess = li.querySelector('.btn-success');
     this.buttonDanger = li.querySelector('.delete');
     this.buttonNotDone = li.querySelector('.btn-danger')
     this.buttonSaveModal = li.querySelector('.modal .save');
     this.textAreaModal = li.querySelector('.modal textarea');
-    this.buttonSaveModal.addEventListener('click',this.saveModal.bind(this, wrapperContent, errorsModal));
     this.buttonSuccess.addEventListener('click', this.eventSuccess.bind(this));
     this.buttonDanger.addEventListener('click', this.eventDelete.bind(this));
     this.buttonNotDone.addEventListener('click', this.eventNotDone.bind(this));
     container.appendChild(li);
     this.thisItem = container.querySelector('.' + this.name);
+    this.wrapperContent =  this.thisItem.querySelector('.content');
+    this.buttonSaveModal.addEventListener('click',this.saveModal.bind(this, errorsModal));
     this.wrapper = this.thisItem.querySelector('.wrapper');
     wrapperError.textContent = '';
   }
@@ -183,7 +183,7 @@ function checkLocalStorage() {
       number: returnToDo.number,
       status: returnToDo.status,
     })
-    // allElements.push(newElement);
+    allElements.push(newElement);
   }
 }
 checkLocalStorage();
@@ -196,5 +196,5 @@ buttonCreate.addEventListener('click', function() {
     content: textArea.value,
     number: container.children.length + 1
   })
-  // allElements.push(newElement);
+  allElements.push(newElement);
 })
