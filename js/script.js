@@ -1,3 +1,4 @@
+
 // Все переменные, которые нам пригодятся.
 let allElements = [];
 let form = document.querySelector('.form form');
@@ -135,6 +136,7 @@ class ElementToDo {
   save() {
     let values = this.get();
     localStorage.setItem(this.name,JSON.stringify(values));
+    localStorage.setItem('lastkey', this.number);
   }
   saveModal(errors) {
     if(this.textAreaModal.value != '') {
@@ -190,8 +192,10 @@ class ElementToDo {
 }
 //функция, которая проверяет, есть ли элемент в localstorage
 function checkLocalStorage() {
-  for(let i = 1; i <= localStorage.length; i++) {
+  let maxValueKey =  JSON.parse(localStorage.getItem('lastkey'));
+  for(let i = 1; i <= maxValueKey; i++) {
     let returnToDo = JSON.parse(localStorage.getItem("element_" + i));
+    if(returnToDo == undefined) continue;
     let newElement = new ElementToDo({
       name: returnToDo.name,
       headLine: returnToDo.headLine,
@@ -214,3 +218,4 @@ buttonCreate.addEventListener('click', function() {
   })
   allElements.push(newElement);
 })
+// Time Picker Initialization
