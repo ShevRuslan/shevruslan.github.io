@@ -7,6 +7,9 @@ let head = document.querySelector('form .headline');
 let textArea = document.querySelector('form .textcontent');
 let container = document.querySelector('.todo_container');
 let wrapperError = document.querySelector('.wrapper__error')
+let searchInput = document.querySelector('.search');
+let buttonDeleteAllTasks = document.querySelector('.button__delete');
+let hideElement = [];
 
 //класс для одно элемента тудушк
 class ElementToDo {
@@ -81,6 +84,7 @@ class ElementToDo {
       classStatus = 'border-red';
     }
     let template = `
+    <section class="drag" draggable="true">
       <div class="dropdown">
             <a class="btn btn-primary btn-sm" id="dropdownMenu${settings.number}" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars" aria-hidden="true"></i></a>
@@ -129,6 +133,7 @@ class ElementToDo {
         </div>
       </div>
       <!-- Central Modal Small -->
+      </section>
   `
   return template;
   }
@@ -179,6 +184,7 @@ class ElementToDo {
       });
       let li = document.createElement('li');
       li.classList.add(this.name);
+      li.id = 'number__' + this.number;
       li.innerHTML = template;
       form.reset();
       this.initElements(li);
@@ -207,7 +213,23 @@ function checkLocalStorage() {
   }
 }
 checkLocalStorage();
-
+searchInput.addEventListener('input', function() {
+  allElements.forEach(function(element){
+    if(element.content.toLowerCase().indexOf(searchInput.value.toLowerCase()) == -1) {
+      let elementTask = container.querySelector("." + element.name);
+      elementTask.hidden = true;
+    }
+    else {
+      let elementTask = container.querySelector("." + element.name);
+      elementTask.hidden = false;
+    }
+  });
+});
+buttonDeleteAllTasks.addEventListener('click', function() {
+  localStorage.clear();
+  let elems = container.querySelectorAll('li');
+  Array.from(elems).forEach(elem => elem.remove());
+});
 buttonCreate.addEventListener('click', function() {
   let _name = "element_" + (container.children.length + 1);
   let newElement = new ElementToDo({
@@ -218,4 +240,43 @@ buttonCreate.addEventListener('click', function() {
   })
   allElements.push(newElement);
 })
-// Time Picker Initialization
+//--------------------------------------------------------DRAG&DROP------------------------------------------
+// container.addEventListener('dragstart', e => {
+//   const target = e.target;
+//   e.dataTransfer.setData('html', target.outerHTML);
+//   target.parentElement.classList.add('hidden');
+// });
+// container.addEventListener('dragenter', e => {
+//   const target = e.target.parentElement.parentElement;
+//   const elem = document.createElement('li');
+//   elem.className = "drag placheholder";
+//   if(target.matches('li')) {
+//     const placeholders = document.querySelectorAll('.placheholder');
+//     Array.from(placeholders).forEach(elem => container.removeChild(elem));
+//     target.parentElement.insertBefore(elem, target);
+//   }
+//   else {
+//     return;
+//   }
+  
+// });
+// container.addEventListener('dragover', e=> {
+//   e.preventDefault();
+// });
+// container.addEventListener('dragend', e=> {
+//   const hiddens = document.querySelector('.hidden');
+//   const placheholder = document.querySelector('.placheholder');
+//   hiddens.classList.remove('hidden');
+//   if(placheholder != null) {
+//     container.removeChild(placheholder); 
+//   }
+// });
+// container.addEventListener('drop', e => {
+//   const hiddens = document.querySelector('.hidden');
+//   const placheholder = document.querySelector('.placheholder');
+//   const elem =  e.dataTransfer.getData('html');
+//   placheholder.innerHTML = elem;
+//   container.removeChild(hiddens);
+//   placheholder.classList.remove('placheholder');
+// }); 
+//--------------------------------------------------------DRAG&DROP------------------------------------------

@@ -11,6 +11,21 @@ i {
   color: #000000;
   font-size: 12px;
 }
+.hidden {
+  opacity: 0.4;
+  transition: 0.5s;
+}
+.placheholder {
+  width: auto;
+  height: 200px;
+  border: 2px dashed #33b5e5;
+}
+.button__delete {
+  width: 100%;
+  margin: 0;
+  margin-top: 15px;
+  border-radius: 50px;
+}
 .todo_container {
   list-style-type: none;
   padding: 0;
@@ -21,7 +36,7 @@ i {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: 20px 0;
+  margin: 40px 0;
 }
 .todo_container > li .wrapper {
   padding-left: 15px;
@@ -86,4 +101,7 @@ footer {
 }
 .wrapper p {
   word-wrap: break-word;
+}
+li {
+  cursor: pointer;
 }
