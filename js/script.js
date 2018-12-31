@@ -28,7 +28,7 @@ class ElementToDo {
     this.wrapperContent = null;
     this.textAreaModal = null;
     this.wrapper = null;
-    this.date = new Date();
+    this.date = settings.date || new Date() ;
     this.init();//вызывается функция, который инициализирует объекта
     //конец инциализации объекта
   }
@@ -84,7 +84,7 @@ class ElementToDo {
       classStatus = 'border-red';
     }
     let template = `
-    <section class="drag" draggable="true">
+    <section>
       <div class="dropdown">
             <a class="btn btn-primary btn-sm" id="dropdownMenu${settings.number}" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars" aria-hidden="true"></i></a>
@@ -208,11 +208,14 @@ function checkLocalStorage() {
       content: returnToDo.content,
       number: returnToDo.number,
       status: returnToDo.status,
+      date: returnToDo.date,
     })
     allElements.push(newElement);
   }
 }
+
 checkLocalStorage();
+
 searchInput.addEventListener('input', function() {
   allElements.forEach(function(element){
     if(element.content.toLowerCase().indexOf(searchInput.value.toLowerCase()) == -1) {
@@ -225,11 +228,13 @@ searchInput.addEventListener('input', function() {
     }
   });
 });
+
 buttonDeleteAllTasks.addEventListener('click', function() {
   localStorage.clear();
   let elems = container.querySelectorAll('li');
   Array.from(elems).forEach(elem => elem.remove());
 });
+
 buttonCreate.addEventListener('click', function() {
   let _name = "element_" + (container.children.length + 1);
   let newElement = new ElementToDo({
@@ -240,6 +245,7 @@ buttonCreate.addEventListener('click', function() {
   })
   allElements.push(newElement);
 })
+
 //--------------------------------------------------------DRAG&DROP------------------------------------------
 // container.addEventListener('dragstart', e => {
 //   const target = e.target;
