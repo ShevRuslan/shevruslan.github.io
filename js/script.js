@@ -28,7 +28,8 @@ class ElementToDo {
     this.wrapperContent = null;
     this.textAreaModal = null;
     this.wrapper = null;
-    this.date = settings.date || new Date() ;
+    let _date = new Date();
+    this.date = settings.date || this.formatDate(_date) ;
     this.init();//вызывается функция, который инициализирует объекта
     //конец инциализации объекта
   }
@@ -71,7 +72,7 @@ class ElementToDo {
       content: this.content,
       number: this.number,
       status: this.status,
-      date: this.formatDate(this.date),
+      date: this.date,
     }
   }
   //функция, которая генерирует шаблон для будущего объекта
@@ -180,7 +181,7 @@ class ElementToDo {
         content: this.content,
         number: this.number,
         status: this.status,
-        date: this.formatDate(this.date),
+        date: this.date,
       });
       let li = document.createElement('li');
       li.classList.add(this.name);
