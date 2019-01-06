@@ -102,6 +102,68 @@ footer {
 .wrapper p {
   word-wrap: break-word;
 }
-li {
-  cursor: pointer;
+
+.light,
+.light .navbar,
+.light .todo_container li .dropdown a,
+.light .todo_container li .dropdown div,
+.light .form form,
+.light .form form input,
+.light .form form .create,
+.light .form .md-form .button__delete,
+.light .form .md-form input,
+.light .todo_container li .wrapper,
+.light .navbar .navbar-brand,
+.light .navbar .navbar-collapse ul li a,
+.light .todo_container li,
+.light .todo_container li .wrapper i {
+  transition: 0.5s !important;
+}
+
+.dark-theme-with-tranzition,
+.dark-theme-with-tranzition .navbar,
+.dark-theme-with-tranzition .todo_container li .dropdown a,
+.dark-theme-with-tranzition .todo_container li .dropdown div,
+.dark-theme-with-tranzition .form form,
+.dark-theme-with-tranzition .form form input,
+.dark-theme-with-tranzition .form form .create,
+.dark-theme-with-tranzition .form .md-form .button__delete,
+.dark-theme-with-tranzition .form .md-form input,
+.dark-theme-with-tranzition .todo_container li .wrapper,
+.dark-theme-with-tranzition .navbar .navbar-brand,
+.dark-theme-with-tranzition .navbar .navbar-collapse ul li a,
+.dark-theme-with-tranzition .todo_container li,
+.dark-theme-with-tranzition .todo_container li .wrapper i {
+  transition: 0.5s !important;
+}
+
+.dark-theme {
+  background-color: #1D1D24;
+}
+.dark-theme .form form .create {
+  background-color: #135e79 !important;
+}
+.dark-theme .form .md-form .button__delete {
+  background-color: #73131b !important;
+}
+.dark-theme .form form input {
+  background-color: #14191E;
+  border: none;
+}
+.dark-theme .navbar,
+.dark-theme .todo_container li .dropdown a {
+  background-color: #23232D !important;
+}
+.dark-theme .todo_container li .dropdown div {
+  background-color: #1D1D24;
+}
+.dark-theme .form form,
+.dark-theme .form .md-form input,
+.dark-theme .todo_container li .wrapper {
+  border-color: #2C2C36 !important;
+}
+.dark-theme .form form p,
+.dark-theme .todo_container li,
+.dark-theme .todo_container li .wrapper i {
+  color: #77BABC !important;
 }

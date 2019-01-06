@@ -1,4 +1,3 @@
-
 // Все переменные, которые нам пригодятся.
 let allElements = [];
 let form = document.querySelector('.form form');
@@ -9,9 +8,12 @@ let container = document.querySelector('.todo_container');
 let wrapperError = document.querySelector('.wrapper__error')
 let searchInput = document.querySelector('.search');
 let buttonDeleteAllTasks = document.querySelector('.button__delete');
+let buttonChangeTheme = document.querySelector('.change-theme');
 let hideElement = [];
+let body = document.querySelector('body')
+// Все переменные, которые нам пригодятся.
 
-//класс для одно элемента тудушк
+//класс для одно элемента туду элемента
 class ElementToDo {
   constructor(settings) {
     //начала инциализации объекта
@@ -215,10 +217,9 @@ function checkLocalStorage() {
   }
 }
 
-checkLocalStorage();
 
-searchInput.addEventListener('input', function() {
-  allElements.forEach(function(element){
+searchInput.addEventListener('input', () => {
+  allElements.forEach((element) => {
     if(element.content.toLowerCase().indexOf(searchInput.value.toLowerCase()) == -1) {
       let elementTask = container.querySelector("." + element.name);
       elementTask.hidden = true;
@@ -230,13 +231,19 @@ searchInput.addEventListener('input', function() {
   });
 });
 
-buttonDeleteAllTasks.addEventListener('click', function() {
+buttonDeleteAllTasks.addEventListener('click', () => {
   localStorage.clear();
+  if(body.classList.contains('dark-theme')) {
+    localStorage.setItem('theme', 'dark')
+  }
+  else if(body.classList.contains('light')) {
+    localStorage.setItem('theme', 'light');
+  }
   let elems = container.querySelectorAll('li');
   Array.from(elems).forEach(elem => elem.remove());
 });
 
-buttonCreate.addEventListener('click', function() {
+buttonCreate.addEventListener('click', () => {
   let _name = "element_" + (container.children.length + 1);
   let newElement = new ElementToDo({
     name: _name,
@@ -246,7 +253,35 @@ buttonCreate.addEventListener('click', function() {
   })
   allElements.push(newElement);
 })
-
+buttonChangeTheme.addEventListener('click', (e) => {
+  e.preventDefault();
+  changeTheme();
+})
+changeTheme = () => {
+  if(body.classList.contains('dark-theme')) {
+    body.classList.remove('dark-theme-with-tranzition', 'dark-theme');
+    body.classList.add('light')
+    localStorage.setItem('theme', 'light')
+  }
+  else {
+    body.classList.add('dark-theme', 'dark-theme-with-tranzition');
+    body.classList.remove('light');
+    localStorage.setItem('theme', 'dark')
+  }
+}
+theme = () => {
+  let theme = localStorage.getItem('theme');
+  if(theme == 'dark') {
+    body.classList.add('dark-theme');
+  }
+  else {
+    body.classList.add('light');
+  }
+}
+window.addEventListener('load', () => {
+  theme();
+  checkLocalStorage();
+})
 //--------------------------------------------------------DRAG&DROP------------------------------------------
 // container.addEventListener('dragstart', e => {
 //   const target = e.target;
