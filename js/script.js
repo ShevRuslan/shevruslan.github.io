@@ -1,5 +1,7 @@
 // Все переменные, которые нам пригодятся.
 let allElements = [];
+let hideElement = [];
+let body = document.querySelector('body')
 let form = document.querySelector('.form form');
 let buttonCreate = document.querySelector('form .create');
 let head = document.querySelector('form .headline');
@@ -9,19 +11,17 @@ let wrapperError = document.querySelector('.wrapper__error')
 let searchInput = document.querySelector('.search');
 let buttonDeleteAllTasks = document.querySelector('.button__delete');
 let buttonChangeTheme = document.querySelector('.change-theme');
-let hideElement = [];
-let body = document.querySelector('body')
 // Все переменные, которые нам пригодятся.
 
-//класс для одно элемента туду элемента
+//Класс для одно элемента туду элемента
 class ElementToDo {
-  constructor(settings) {
-    //начала инциализации объекта
-    this.name = settings.name;
-    this.headLine = settings.headLine;
-    this.content = settings.content;
-    this.number = settings.number;
-    this.status = settings.status || 'wait';
+  constructor({name, headLine, content, number, status, date}) {
+    //Начала инциализации объекта
+    this.name = name;
+    this.headLine = headLine;
+    this.content = content;
+    this.number = number;
+    this.status = status || 'wait';
     this.buttonSuccess = null;
     this.buttonNotDone = null;
     this.buttonDanger = null;
@@ -31,9 +31,9 @@ class ElementToDo {
     this.textAreaModal = null;
     this.wrapper = null;
     let _date = new Date();
-    this.date = settings.date || this.formatDate(_date) ;
-    this.init();//вызывается функция, который инициализирует объекта
-    //конец инциализации объекта
+    this.date = date || this.formatDate(_date);
+    this.init(); //Вызывается функция, который инициализирует объекта
+    //Конец инциализации объекта
   }
   formatDate(date) {
     var dd = date.getDate();
@@ -45,28 +45,28 @@ class ElementToDo {
     var yy = date.getFullYear() % 100;
     if (yy < 10) yy = '0' + yy;
 
-    return  dd + '.' + mm + '.' + yy;
+    return dd + '.' + mm + '.' + yy;
   }
-  //события удаление задания
+  //События удаление задания
   eventDelete() {
     this.thisItem.remove();
-    localStorage.removeItem(this.name);//Удаляем с localstorage
+    localStorage.removeItem(this.name); //Удаляем с localstorage
   }
-  //событие выполнение задания
+  //Событие выполнение задания
   eventSuccess() {
-    this.wrapper.classList.remove('border-red'); 
+    this.wrapper.classList.remove('border-red');
     this.wrapper.classList.add('border-green');
     this.status = 'done';
     this.save();
   }
-  //событие невыполнение задания
+  //Событие невыполнение задания
   eventNotDone() {
     this.wrapper.classList.remove('border-green');
     this.wrapper.classList.add('border-red');
     this.status = 'notDone';
     this.save();
   }
-  //функция, которая возвращает данные об объекте
+  //Функция, которая возвращает данные об объекте
   get() {
     return {
       name: this.name,
@@ -77,16 +77,15 @@ class ElementToDo {
       date: this.date,
     }
   }
-  //функция, которая генерирует шаблон для будущего объекта
+  //Функция, которая генерирует шаблон для будущего объекта
   getTemplate(settings) {
     let classStatus = '';
-    if(settings.status == 'done') {
+    if (settings.status == 'done') {
       classStatus = 'border-green';
-    }
-    else if(settings.status == "notDone") {
+    } else if (settings.status == "notDone") {
       classStatus = 'border-red';
     }
-    let template = `
+    return  `
     <section>
       <div class="dropdown">
             <a class="btn btn-primary btn-sm" id="dropdownMenu${settings.number}" data-toggle="dropdown"
@@ -138,26 +137,24 @@ class ElementToDo {
       <!-- Central Modal Small -->
       </section>
   `
-  return template;
   }
-  //сохрание в localstorage
+  //Сохранение в localstorage
   save() {
     let values = this.get();
-    localStorage.setItem(this.name,JSON.stringify(values));
+    localStorage.setItem(this.name, JSON.stringify(values));
     localStorage.setItem('lastkey', this.number);
   }
   saveModal(errors) {
-    if(this.textAreaModal.value != '') {
-      $('#basicExampleModal' + this.number).modal('hide');//mdboostrap hide modal
+    if (this.textAreaModal.value != '') {
+      $('#basicExampleModal' + this.number).modal('hide'); //mdboostrap hide modal
       this.content = this.textAreaModal.value;
       this.wrapperContent.textContent = this.content;
       this.save();
-    }
-    else {
+    } else {
       errors.textContent = "Поле не должно быть пустое!";
     }
   }
-  //инициализия всех элементов объекта(кнопок)
+  //Инициализия всех элементов объекта(кнопок)
   initElements(li) {
     let errorsModal = li.querySelector('.modal .errors');
     this.buttonSuccess = li.querySelector('.btn-success');
@@ -170,14 +167,14 @@ class ElementToDo {
     this.buttonNotDone.addEventListener('click', this.eventNotDone.bind(this));
     container.appendChild(li);
     this.thisItem = container.querySelector('.' + this.name);
-    this.wrapperContent =  this.thisItem.querySelector('.content');
-    this.buttonSaveModal.addEventListener('click',this.saveModal.bind(this, errorsModal));
+    this.wrapperContent = this.thisItem.querySelector('.content');
+    this.buttonSaveModal.addEventListener('click', this.saveModal.bind(this, errorsModal));
     this.wrapper = this.thisItem.querySelector('.wrapper');
     wrapperError.textContent = '';
   }
-  //функция инициализации
+  //Функция инициализации
   init() {
-    if(this.headLine != '' && this.content != '') {
+    if (this.headLine != '' && this.content != '') {
       let template = this.getTemplate({
         headLine: this.headLine,
         content: this.content,
@@ -193,25 +190,32 @@ class ElementToDo {
       this.initElements(li);
       this.save();
 
-    }
-    else {
+    } else {
       wrapperError.textContent = "Поля не должны быть пустыми!"
     }
   }
 }
-//функция, которая проверяет, есть ли элемент в localstorage
+//Функция, которая проверяет, есть ли элемент в localstorage
 function checkLocalStorage() {
-  let maxValueKey =  JSON.parse(localStorage.getItem('lastkey'));
-  for(let i = 1; i <= maxValueKey; i++) {
+  let maxValueKey = JSON.parse(localStorage.getItem('lastkey'));
+  for (let i = 1; i <= maxValueKey; i++) {
     let returnToDo = JSON.parse(localStorage.getItem("element_" + i));
-    if(returnToDo == undefined) continue;
+    let {
+      name,
+      headLine,
+      content,
+      number,
+      status,
+      date
+    } = returnToDo;
+    if (returnToDo == undefined) continue;
     let newElement = new ElementToDo({
-      name: returnToDo.name,
-      headLine: returnToDo.headLine,
-      content: returnToDo.content,
-      number: returnToDo.number,
-      status: returnToDo.status,
-      date: returnToDo.date,
+      name: name,
+      headLine: headLine,
+      content: content,
+      number: number,
+      status: status,
+      date: date,
     })
     allElements.push(newElement);
   }
@@ -220,11 +224,10 @@ function checkLocalStorage() {
 
 searchInput.addEventListener('input', () => {
   allElements.forEach((element) => {
-    if(element.content.toLowerCase().indexOf(searchInput.value.toLowerCase()) == -1) {
+    if (element.content.toLowerCase().indexOf(searchInput.value.toLowerCase()) == -1) {
       let elementTask = container.querySelector("." + element.name);
       elementTask.hidden = true;
-    }
-    else {
+    } else {
       let elementTask = container.querySelector("." + element.name);
       elementTask.hidden = false;
     }
@@ -233,10 +236,9 @@ searchInput.addEventListener('input', () => {
 
 buttonDeleteAllTasks.addEventListener('click', () => {
   localStorage.clear();
-  if(body.classList.contains('dark-theme')) {
+  if (body.classList.contains('dark-theme')) {
     localStorage.setItem('theme', 'dark')
-  }
-  else if(body.classList.contains('light')) {
+  } else if (body.classList.contains('light')) {
     localStorage.setItem('theme', 'light');
   }
   let elems = container.querySelectorAll('li');
@@ -258,12 +260,11 @@ buttonChangeTheme.addEventListener('click', (e) => {
   changeTheme();
 })
 changeTheme = () => {
-  if(body.classList.contains('dark-theme')) {
+  if (body.classList.contains('dark-theme')) {
     body.classList.remove('dark-theme-with-tranzition', 'dark-theme');
     body.classList.add('light')
     localStorage.setItem('theme', 'light')
-  }
-  else {
+  } else {
     body.classList.add('dark-theme', 'dark-theme-with-tranzition');
     body.classList.remove('light');
     localStorage.setItem('theme', 'dark')
@@ -271,10 +272,9 @@ changeTheme = () => {
 }
 theme = () => {
   let theme = localStorage.getItem('theme');
-  if(theme == 'dark') {
+  if (theme == 'dark') {
     body.classList.add('dark-theme');
-  }
-  else {
+  } else {
     body.classList.add('light');
   }
 }
@@ -300,7 +300,7 @@ window.addEventListener('load', () => {
 //   else {
 //     return;
 //   }
-  
+
 // });
 // container.addEventListener('dragover', e=> {
 //   e.preventDefault();
