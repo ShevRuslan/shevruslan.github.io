@@ -101,7 +101,7 @@ class ElementToDo {
         </div>
       <section class="wrapper ${classStatus} block-example border border-info">
         <h4 class="zag">${settings.headLine}</h4>
-        <p class="text-justify content">${settings.content}</p>
+        <pre class="text-justify content">${settings.content}</pre>
         <i class="date__create" >${settings.date}</i>
       </section>
 
