@@ -129,8 +129,8 @@ class ElementToDo {
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary btn-sm save">Save changes</button>
+              <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Закрыть</button>
+              <button type="button" class="btn btn-primary btn-sm save">Сохранить</button>
             </div>
           </div>
         </div>
