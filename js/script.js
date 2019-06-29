@@ -19,7 +19,7 @@ class ElementToDo {
     //Начала инциализации объекта
     this.name = name;
     this.headLine = headLine;
-    this.content = content;
+    this.content = content.replace(/(<([^>]+)>)/ig, "");
     this.number = number;
     this.status = status || 'wait';
     this.buttonSuccess = null;
