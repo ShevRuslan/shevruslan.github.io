@@ -18,7 +18,7 @@ class ElementToDo {
   constructor({name, headLine, content, number, status, date}) {
     //Начала инциализации объекта
     this.name = name;
-    this.headLine = headLine;
+    this.headLine = headLine.replace(/(<([^>]+)>)/ig, "");
     this.content = content.replace(/(<([^>]+)>)/ig, "");
     this.number = number;
     this.status = status || 'wait';
