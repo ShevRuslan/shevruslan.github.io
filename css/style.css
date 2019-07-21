@@ -15,6 +15,9 @@ i {
   opacity: 0.4;
   transition: 0.5s;
 }
+textarea {
+  transition: 0.5s;
+}
 .textcontent,
 .content {
   font-family: Roboto, sans-serif;
