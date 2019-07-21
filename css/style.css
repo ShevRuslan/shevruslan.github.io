@@ -150,7 +150,8 @@ footer {
 .dark-theme .form .md-form .button__delete {
   background-color: #73131b !important;
 }
-.dark-theme .form form input {
+.dark-theme .form form input,
+.dark-theme .form form textarea{
   background-color: #14191E;
   border: none;
 }
