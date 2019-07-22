@@ -121,7 +121,7 @@ class ElementToDo {
             <div class="modal-body">
               <div class="md-form">
                 <i class="fa fa-pencil prefix"></i>
-                <textarea type="text" id="form10" class="md-textarea form-control" rows="3" required>${settings.content}</textarea>
+                <textarea type="text" id="form10" class="form-control" rows="3" required>${settings.content}</textarea>
                 <div class="errors">
                 
                 </div>
