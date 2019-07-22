@@ -36,13 +36,13 @@ class ElementToDo {
     //Конец инциализации объекта
   }
   formatDate(date) {
-    var dd = date.getDate();
+    let dd = date.getDate();
     if (dd < 10) dd = '0' + dd;
 
-    var mm = date.getMonth() + 1;
+    let mm = date.getMonth() + 1;
     if (mm < 10) mm = '0' + mm;
 
-    var yy = date.getFullYear() % 100;
+    let yy = date.getFullYear() % 100;
     if (yy < 10) yy = '0' + yy;
 
     return dd + '.' + mm + '.' + yy;
@@ -211,8 +211,8 @@ function checkLocalStorage() {
     if (returnToDo == undefined) continue;
     let newElement = new ElementToDo({
       name: name,
-      headLine: headLine,
-      content: content,
+      headLine: headLine.trim(),
+      content: content.trim(),
       number: number,
       status: status,
       date: date,
@@ -249,8 +249,8 @@ buttonCreate.addEventListener('click', () => {
   let _name = "element_" + (container.children.length + 1);
   let newElement = new ElementToDo({
     name: _name,
-    headLine: head.value,
-    content: textArea.value,
+    headLine: head.value.trim(),
+    content: textArea.value.trim(),
     number: container.children.length + 1
   })
   allElements.push(newElement);

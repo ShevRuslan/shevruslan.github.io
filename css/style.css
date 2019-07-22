@@ -15,9 +15,6 @@ i {
   opacity: 0.4;
   transition: 0.5s;
 }
-textarea {
-  transition: 0.5s;
-}
 .textcontent,
 .content {
   font-family: Roboto, sans-serif;
@@ -30,8 +27,7 @@ textarea {
 .button__delete {
   width: 100%;
   margin: 0;
-  margin-top: 15px;
-  border-radius: 50px;
+  margin-top: 30px !important;
 }
 .todo_container {
   list-style-type: none;
@@ -115,6 +111,7 @@ footer {
 .light .todo_container li .dropdown a,
 .light .todo_container li .dropdown div,
 .light .form form,
+.light .form textarea,
 .light .form form input,
 .light .form form .create,
 .light .form .md-form .button__delete,
@@ -124,7 +121,7 @@ footer {
 .light .navbar .navbar-collapse ul li a,
 .light .todo_container li,
 .light .todo_container li .wrapper i {
-  transition: 0.5s !important;
+  transition: 0.5s  !important;
 }
 
 .dark-theme-with-tranzition,
@@ -132,6 +129,7 @@ footer {
 .dark-theme-with-tranzition .todo_container li .dropdown a,
 .dark-theme-with-tranzition .todo_container li .dropdown div,
 .dark-theme-with-tranzition .form form,
+.dark-theme-with-tranzition textarea,
 .dark-theme-with-tranzition .form form input,
 .dark-theme-with-tranzition .form form .create,
 .dark-theme-with-tranzition .form .md-form .button__delete,
@@ -139,7 +137,6 @@ footer {
 .dark-theme-with-tranzition .todo_container li .wrapper,
 .dark-theme-with-tranzition .navbar .navbar-brand,
 .dark-theme-with-tranzition .navbar .navbar-collapse ul li a,
-.dark-theme-with-tranzition .todo_container li,
 .dark-theme-with-tranzition .todo_container li .wrapper i {
   transition: 0.5s !important;
 }
@@ -157,6 +154,9 @@ footer {
 .dark-theme .form form textarea{
   background-color: #14191E;
   border: none;
+}
+.dark-theme .todo_container .wrapper pre {
+  color: #ffffff;
 }
 .dark-theme .navbar,
 .dark-theme .todo_container li .dropdown a {
