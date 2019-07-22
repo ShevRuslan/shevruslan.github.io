@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
   <meta charset="UTF-8">
@@ -17,8 +17,29 @@
 </head>
 
 <body>
-  <html lang="en" class="full-height">
+  <html lang="ru" class="full-height">
 
+    <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Что это?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Данное приложение предназачено для введение списка дел. Т.е вы можете создать какую-либо закладку, чтобы не забыть про нее. <br>
+          Все закладки сохраняются, так что после перезагрузки страницы - они не удалятся. <br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <!--Main Navigation-->
   <header>
 
@@ -33,7 +54,7 @@
       </button>
       <div class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <li class="nav-item"  data-toggle="modal" data-target="#basicExampleModal" >
             <a class="nav-link" href="#">Что это?</a>
           </li>
           <li class="nav-item">
